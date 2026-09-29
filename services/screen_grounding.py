@@ -23,16 +23,18 @@ class OCRUnavailable(RuntimeError):
 def get_ocr_engine():
     try:
         from rapidocr import RapidOCR
+
     except ImportError as exc:
         raise OCRUnavailable(
-            "缺少 OCR 依赖，请安装 rapidocr 和 onnxruntime。"
+            f"OCR 依赖加载失败：{exc}"
         ) from exc
 
     try:
         return RapidOCR()
+
     except Exception as exc:
         raise OCRUnavailable(
-            "OCR 初始化失败，请检查终端中的模型加载错误。"
+            f"OCR 初始化失败：{exc}"
         ) from exc
 
 
